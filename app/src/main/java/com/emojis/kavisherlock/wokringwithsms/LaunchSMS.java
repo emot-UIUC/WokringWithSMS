@@ -26,11 +26,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.felhr.serialportexample.UsbService;
+
 import java.lang.ref.WeakReference;
 import java.util.Set;
 
 public class LaunchSMS extends AppCompatActivity {
-    private USBService usbService;
+    private UsbService usbService;
     IntentFilter intentFilter;
     String messageText;
     int prev_back = 0xffffffff;
@@ -291,7 +293,7 @@ public class LaunchSMS extends AppCompatActivity {
         //---register the receiver---
         registerReceiver(intentReceiver, intentFilter);
         setFilters();  // Start listening notifications from USBService
-        startService(USBService.class, usbConnection, null); // Start USBService(if it was not started before) and Bind it
+        startService(UsbService.class, usbConnection, null); // Start USBService(if it was not started before) and Bind it
         super.onResume();
     }
     @Override
@@ -329,7 +331,7 @@ public class LaunchSMS extends AppCompatActivity {
 
     private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras)
     {
-        if(USBService.SERVICE_CONNECTED == false)
+        if(UsbService.SERVICE_CONNECTED == false)
         {
             Intent startService = new Intent(this, service);
             if(extras != null && !extras.isEmpty())
@@ -350,11 +352,11 @@ public class LaunchSMS extends AppCompatActivity {
     private void setFilters()
     {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(USBService.ACTION_USB_PERMISSION_GRANTED);
-        filter.addAction(USBService.ACTION_NO_USB);
-        filter.addAction(USBService.ACTION_USB_DISCONNECTED);
-        filter.addAction(USBService.ACTION_USB_NOT_SUPPORTED);
-        filter.addAction(USBService.ACTION_USB_PERMISSION_NOT_GRANTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
+        filter.addAction(UsbService.ACTION_NO_USB);
+        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
+        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
         registerReceiver(mUsbReceiver, filter);
     }
 
@@ -375,7 +377,7 @@ public class LaunchSMS extends AppCompatActivity {
         {
             switch(msg.what)
             {
-                case USBService.MESSAGE_FROM_SERIAL_PORT:
+                case UsbService.MESSAGE_FROM_SERIAL_PORT:
                     String data = (String) msg.obj;
                     //mActivity.get().display.append(data);
                     break;
@@ -391,19 +393,19 @@ public class LaunchSMS extends AppCompatActivity {
         @Override
         public void onReceive(Context arg0, Intent arg1)
         {
-            if(arg1.getAction().equals(USBService.ACTION_USB_PERMISSION_GRANTED)) // USB PERMISSION GRANTED
+            if(arg1.getAction().equals(UsbService.ACTION_USB_PERMISSION_GRANTED)) // USB PERMISSION GRANTED
             {
                 Toast.makeText(arg0, "USB Ready", Toast.LENGTH_SHORT).show();
-            }else if(arg1.getAction().equals(USBService.ACTION_USB_PERMISSION_NOT_GRANTED)) // USB PERMISSION NOT GRANTED
+            }else if(arg1.getAction().equals(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED)) // USB PERMISSION NOT GRANTED
             {
                 Toast.makeText(arg0, "USB Permission not granted", Toast.LENGTH_SHORT).show();
-            }else if(arg1.getAction().equals(USBService.ACTION_NO_USB)) // NO USB CONNECTED
+            }else if(arg1.getAction().equals(UsbService.ACTION_NO_USB)) // NO USB CONNECTED
             {
                 Toast.makeText(arg0, "No USB connected", Toast.LENGTH_SHORT).show();
-            }else if(arg1.getAction().equals(USBService.ACTION_USB_DISCONNECTED)) // USB DISCONNECTED
+            }else if(arg1.getAction().equals(UsbService.ACTION_USB_DISCONNECTED)) // USB DISCONNECTED
             {
                 Toast.makeText(arg0, "USB disconnected", Toast.LENGTH_SHORT).show();
-            }else if(arg1.getAction().equals(USBService.ACTION_USB_NOT_SUPPORTED)) // USB NOT SUPPORTED
+            }else if(arg1.getAction().equals(UsbService.ACTION_USB_NOT_SUPPORTED)) // USB NOT SUPPORTED
             {
                 Toast.makeText(arg0, "USB device not supported", Toast.LENGTH_SHORT).show();
             }
@@ -415,7 +417,7 @@ public class LaunchSMS extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1)
         {
-            usbService = ((USBService.UsbBinder) arg1).getService();
+            usbService = ((UsbService.UsbBinder) arg1).getService();
             usbService.setHandler(mHandler);
         }
 

@@ -78,12 +78,12 @@ public class LaunchSMS extends AppCompatActivity {
     public String getEmotion (String emoji) {
         if (emoji == "")
             return "None";
-        Received = (LinearLayout) findViewById(R.id.layout1);
+        //Received = (LinearLayout) findViewById(R.id.layout1);
         String emotion = "";
         int u = 0xD83D;
         if (emoji.length() == 0) {
             emotion = "No Emoji";
-            Received.setBackgroundColor(Color.WHITE);
+            //Received.setBackgroundColor(Color.WHITE);
             return emotion;
         }
         float[] orange = new float[3];

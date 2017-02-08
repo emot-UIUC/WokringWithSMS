@@ -6,8 +6,10 @@ package com.emojis.kavisherlock.wokringwithsms;
 
 public class Text {
     String text;
+    String origin;
 
-    public Text(String t){
+    public Text(String t, String o){
         text = t;
+        origin = o;
     }
 }

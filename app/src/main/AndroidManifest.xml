@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,7 +37,7 @@
             android:enabled="true" />
         -->
 
-        <activity android:name=".ConversationActivity"></activity>
+        <activity android:name=".ConversationActivity"/>
     </application>
 
 </manifest>

@@ -7,21 +7,22 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
+
+import org.emot.libcontrol.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +59,8 @@ public class ConversationActivity extends AppCompatActivity {
         intentFilter.addAction("SMS_RECEIVED_ACTION");
 
         launch = new LaunchSMS();
+        Handler handle = new Handler();
+        EmotControl.onCreate(this, handle);
 
     }
 
@@ -133,6 +136,20 @@ public class ConversationActivity extends AppCompatActivity {
                 }
                 LinearLayout convo = (LinearLayout) findViewById(R.id.activity_conversation);
                 convo.setBackgroundColor(color);
+                switch(emotion){
+                    case("Happy"):
+                        EmotControl.setEmotion(Emotions.HAPPY);
+                        break;
+                    case("Sad"):
+                        EmotControl.setEmotion(Emotions.SAD);
+                        break;
+                    case("Angry"):
+                        EmotControl.setEmotion(Emotions.ANGRY);
+                        break;
+                    case("Shocked"):
+                        EmotControl.setEmotion(Emotions.SURPRISE);
+                        break;
+                }
             }
         }
     };
@@ -142,11 +159,13 @@ public class ConversationActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         registerReceiver(intentReceiver, intentFilter);
+        EmotControl.onResume();
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         unregisterReceiver(intentReceiver);
+        EmotControl.onPause();
     }
 }

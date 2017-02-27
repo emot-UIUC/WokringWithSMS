@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">LibControl</string>
+    <string-array name="arm_actions_array">
+        <item>Stable</item>
+        <item>Up</item>
+        <item>Down</item>
+    </string-array>
+    <string-array name="led_colors_array">
+        <item>Black</item>
+        <item>White</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Blue</item>
+        <item>DarkBlue</item>
+
+    </string-array>
+    <string-array name="emotions_array">
+        <item>Reset</item>
+        <item>Angry</item>
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Fear</item>
+        <item>Disgust</item>
+        <item>Surprise</item>
+    </string-array>
+</resources>

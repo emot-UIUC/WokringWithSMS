@@ -31,11 +31,9 @@
             </intent-filter>
         </receiver>
 
-        <!--
-            <service
-            android:name=".USBService"
+        <service
+            android:name="org.emot.libcontrol.UsbService"
             android:enabled="true" />
-        -->
 
         <activity android:name=".ConversationActivity"/>
     </application>
